@@ -9,10 +9,11 @@ const App = () => {
   <div>
 
     <Router>
-      <Switch></Switch>
-      <Route exact path="/" component={HomePage}/>
-      <Route exact path="/restaurants/:id/update" component={UpdatePage}/>
-      <Route exact path="/restaurants/:id" component={DetailsPage}/>
+      <Switch>
+        <Route exact path="/" component={HomePage}/>
+        <Route exact path="/plants/:id/update" component={UpdatePage}/>
+        <Route exact path="/plants/:id" component={DetailsPage}/>
+      </Switch>
     </Router>
 
   </div>
