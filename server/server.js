@@ -1,48 +1,114 @@
 require("dotenv").config();
 const express = require("express");
+const db = require("./db");
 
 const app = express();
+app.use(express.json()); //middleware
 
 //GET all plants
-app.get("/plants", (req, res) => {
-  console.log("all plants");
+app.get("/plants", async (req, res) => {
 
-  res.status(200).json({
+  try {
+    const results = await db.query("SELECT * FROM plants");
 
-  })
-})
+    res.status(200).json({
+      status: "success",
+      results: results.rows.length,
+      data: {
+        plants: results.rows,
+      }
+    })
+
+  } catch (err) {
+    console.log(err);
+  }
+
+});
 
 //GET a specific plant
-app.get("/plants/:id", (req, res) => {
+app.get("/plants/:id", async (req, res) => {
 
-  res.status(200).json({
+  try {
 
-  })
-})
+    const results = await db.query("SELECT * FROM plants where id=$1",
+      [req.params.id]
+    )
+
+    res.status(200).json({
+      status: "success",
+      data: {
+        plants: results.rows[0],
+      }
+
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+
+});
 
 //POST a plant
-app.post("/plants", (req, res) => {
+app.post("/plants", async (req, res) => {
 
-  res.status(201).json({
+  try {
+    const results = await db.query(
+      "INSERT INTO plants (name, genus_species, uses, correspondences) VALUES ($1, $2, $3, $4) returning *",
+      [req.body.name, req.body.genus_species, req.body.uses, req.body.correspondences]
+    );
 
-  })
-})
+    res.status(201).json({
+      status: "success",
+      data: {
+        plants: results.rows[0],
+      }
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+
+});
 
 //UPDATE a plant
-app.put("/plants/:id", (req, res) => {
+app.put("/plants/:id", async (req, res) => {
 
-  res.status(200).json({
+  try {
+    const results = await db.query(
+      "UPDATE plants SET name=$1, genus_species=$2, uses=$3, correspondences=$4 WHERE id=$5 returning *",
+      [req.body.name, req.body.genus_species, req.body.uses, req.body.correspondences, req.params.id],
+    );
 
-  })
-})
+    res.status(200).json({
+      status: "success",
+      data: {
+        plants: results.rows[0],
+      }
+    });
+
+  } catch (err) {
+    console.log(err);
+  }
+
+});
 
 //DELETE a plant
-app.delete("/plants/:id", (req, res) => {
+app.delete("/plants/:id", async (req, res) => {
 
-  res.status(204).json({
+  try {
+    const results = await db.query("DELETE FROM plants WHERE id=$1",
+    [req.params,id],
+    )
 
-  })
-})
+    res.status(204).json({
+      status: "success",
+    })
+
+  } catch (err) {
+    console.log(err);
+  }
+
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
