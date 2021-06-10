@@ -39,13 +39,13 @@ const PlantList = (props) => {
 
             return (
 
-            <tr key={plant.id}>
-              <td>{plant.name}</td>
-              <td>{plant.genus_species}</td>
-              <td>{plant.description}</td>
-              <td><button className="btn btn-warning">Update</button></td>
-              <td><button className="btn btn-danger">Delete</button></td>
-            </tr>
+              <tr key={plant.id}>
+                <td>{plant.name}</td>
+                <td>{plant.genus_species}</td>
+                <td>{plant.description}</td>
+                <td><button className="btn btn-warning">Update</button></td>
+                <td><button className="btn btn-danger">Delete</button></td>
+              </tr>
 
             )
     
