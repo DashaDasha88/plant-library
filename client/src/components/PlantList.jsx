@@ -14,7 +14,7 @@ const PlantList = (props) => {
         setPlants(response.data.data.plants);
   
       } catch (err) {
-  
+        console.log(err);
       }
     }
 
