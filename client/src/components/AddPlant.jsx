@@ -1,10 +1,32 @@
-import React, { useState} from 'react';
+import React, { useContext, useState} from 'react';
+import PlantFinder from "../apis/PlantFinder";
+import { PlantsContext } from '../context/PlantContext';
+
 
 const AddPlant = () => {
+
+  const {addPlants} = useContext(PlantsContext);
 
   const [name, setName] = useState("");
   const [genusSpecies, setGenusSpecies] = useState("");
   const [description, setDescription] = useState("");
+
+  const handleSumbit = async (e) => {
+    e.preventDefault()
+
+    try {
+      const response = await PlantFinder("/", {
+        name,
+        genus_species: genusSpecies,
+        description
+      })
+      addPlants(response.data.data.plants);
+
+    } catch (err) {
+      console.log(err);
+    }
+
+  }
 
 
   return (
@@ -42,7 +64,13 @@ const AddPlant = () => {
         </div>
 
         <div className="col-12">
-          <button type="submit" className="btn btn-primary">Add</button>
+          <button
+          onClick={handleSumbit}
+          type="submit" 
+          className="btn btn-primary"
+          >
+            Add
+          </button>
         </div>
 
       </form>
