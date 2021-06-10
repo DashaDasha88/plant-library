@@ -53,8 +53,8 @@ app.post("/plants", async (req, res) => {
 
   try {
     const results = await db.query(
-      "INSERT INTO plants (name, genus_species, uses, correspondences) VALUES ($1, $2, $3, $4) returning *",
-      [req.body.name, req.body.genus_species, req.body.uses, req.body.correspondences]
+      "INSERT INTO plants (name, genus_species, description) VALUES ($1, $2, $3) returning *",
+      [req.body.name, req.body.genus_species, req.body.description]
     );
 
     res.status(201).json({
@@ -75,8 +75,8 @@ app.put("/plants/:id", async (req, res) => {
 
   try {
     const results = await db.query(
-      "UPDATE plants SET name=$1, genus_species=$2, uses=$3, correspondences=$4 WHERE id=$5 returning *",
-      [req.body.name, req.body.genus_species, req.body.uses, req.body.correspondences, req.params.id],
+      "UPDATE plants SET name=$1, genus_species=$2, description=$3, WHERE id=$5 returning *",
+      [req.body.name, req.body.genus_species, req.body.description, req.params.id],
     );
 
     res.status(200).json({
