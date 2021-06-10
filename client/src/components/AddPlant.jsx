@@ -12,10 +12,10 @@ const AddPlant = () => {
   const [description, setDescription] = useState("");
 
   const handleSumbit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     try {
-      const response = await PlantFinder("/", {
+      const response = await PlantFinder.post("/", {
         name,
         genus_species: genusSpecies,
         description
