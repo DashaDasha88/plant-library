@@ -1,14 +1,14 @@
 import React, { useState, createContext } from "react";
 
-export const PlantContext = createContext();
+export const PlantsContext = createContext();
 
 export const PlantsContextProvider = props => {
-  
-  const [plants, setPlants] = useState([])
+
+  const [plants, setPlants] = useState([]);
 
   return (
-    <RestaurantsContext.Provider>
+    <PlantsContext.Provider value={{plants, setPlants}}>
       {props.children}
-    </RestaurantsContext.Provider>
+    </PlantsContext.Provider>
   )
 }
