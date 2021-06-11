@@ -22,6 +22,22 @@ const PlantList = (props) => {
 
   }, []);
 
+  const handleDelete = async (e, id) => {
+    e.stopPropagation();
+
+    try {
+      const response = await PlantFinder.delete(`/${id}`);
+      console.log(response);
+      
+      setPlants(plants.filter(plant => {
+        return plant.id !== id;
+      }))
+
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   return (
     <div className="list-group">
       <div className="table table-hover table-dark">
@@ -43,20 +59,26 @@ const PlantList = (props) => {
                 <td>{plant.name}</td>
                 <td>{plant.genus_species}</td>
                 <td>{plant.description}</td>
-                <td><button className="btn btn-warning">Update</button></td>
-                <td><button className="btn btn-danger">Delete</button></td>
+                <td>
+                  <button 
+                  className="btn btn-warning"
+                  >
+                    Update
+                  </button>
+                </td>
+                <td>
+                  <button
+                    onClick={(e) => handleDelete(e, plant.id)}
+                    className="btn btn-danger"
+                  >
+                    Delete
+                  </button>
+                </td>
               </tr>
 
             )
     
           })}
-          {/* <tr>
-            <td>Sage</td>
-            <td>Salvia Officinalis</td>
-            <td>Fragrant herb, member of the mint family, native to the Mediterranean</td>
-            <td><button className="btn btn-warning">Update</button></td>
-            <td><button className="btn btn-danger">Delete</button></td>
-          </tr> */}
 
         </tbody>
       </div>
