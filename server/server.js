@@ -1,8 +1,11 @@
 require("dotenv").config();
 const express = require("express");
+const cors = require("cors");
 const db = require("./db");
 
 const app = express();
+
+app.use(cors());
 app.use(express.json()); //middleware
 
 //GET all plants
@@ -97,7 +100,7 @@ app.delete("/plants/:id", async (req, res) => {
 
   try {
     const results = await db.query("DELETE FROM plants WHERE id=$1",
-    [req.params,id],
+    [req.params.id],
     )
 
     res.status(204).json({
