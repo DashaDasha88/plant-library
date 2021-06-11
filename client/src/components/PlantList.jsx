@@ -1,10 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import PlantFinder from "../apis/PlantFinder";
-import { PlantsContext, PlantsContextProvider } from '../context/PlantContext';
+import { PlantsContext } from '../context/PlantContext';
+import { useHistory } from "react-router-dom";
 
 const PlantList = (props) => {
 
   const {plants, setPlants} = useContext(PlantsContext);
+
+  let history = useHistory();
 
   useEffect(() => {
 
@@ -28,7 +31,7 @@ const PlantList = (props) => {
     try {
       const response = await PlantFinder.delete(`/${id}`);
       console.log(response);
-      
+
       setPlants(plants.filter(plant => {
         return plant.id !== id;
       }))
@@ -37,6 +40,12 @@ const PlantList = (props) => {
       console.log(err);
     }
   }
+
+  const handleUpdate = async (e, id) => {
+    e.stopPropagation();
+
+    history.push(`/plants/${id}/update`);
+  };
 
   return (
     <div className="list-group">
@@ -61,6 +70,7 @@ const PlantList = (props) => {
                 <td>{plant.description}</td>
                 <td>
                   <button 
+                  onClick={(e) => handleUpdate(e, plant.id)}
                   className="btn btn-warning"
                   >
                     Update

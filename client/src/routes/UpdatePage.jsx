@@ -1,9 +1,11 @@
 import React from 'react'
+import UpdatePlant from '../components/UpdatePlant'
 
 const UpdatePage = () => {
   return (
     <div>
-      Update Page
+      <h1 className="text-center">Update Plant</h1>
+      <UpdatePlant />
     </div>
   )
 };
