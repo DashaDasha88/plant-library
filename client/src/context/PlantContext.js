@@ -20,4 +20,4 @@ export const PlantsContextProvider = (props) => {
       {props.children}
     </PlantsContext.Provider>
   )
-};
+}
